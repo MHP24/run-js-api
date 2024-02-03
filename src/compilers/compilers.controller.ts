@@ -6,6 +6,7 @@ import { CompileCodeDto } from './dto/compile-code.dto';
 export class CompilersController {
   constructor(private readonly compilersService: CompilersService) {}
 
+  // * Run code (typescript, javascript supported)
   @Post('run')
   compile(@Body() compileCodeDto: CompileCodeDto) {
     return this.compilersService.run(compileCodeDto);
