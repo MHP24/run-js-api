@@ -7,8 +7,14 @@ export class JavaScriptCompiler implements CompilerInterface {
   run(code: string) {
     try {
       const vm = new VM({ timeout: 1000 });
-      const output = vm.run(code.replace(/console\.log/g, ''));
-      return { output: JSON.stringify(output), execution: 'success' };
+      const modifiedCode = `
+        let VM2OutputsLogTracker = []
+        ${code.replace(/console\.log/g, 'VM2OutputsLogTracker.push')}
+        VM2OutputsLogTracker
+      `;
+      const outputs = vm.run(modifiedCode);
+
+      return { outputs, execution: 'success' };
     } catch (error) {
       throw new BadRequestException({
         error: `${error}`,
