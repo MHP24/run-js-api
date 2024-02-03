@@ -16,6 +16,7 @@ export class TypeScriptCompiler implements CompilerInterface {
       },
     }).outputText;
 
+    // * Javascript running
     return this.javaScriptCompiler.run(javaScriptCode);
   }
 }
