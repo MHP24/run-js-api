@@ -8,9 +8,12 @@ export class JavaScriptCompiler implements CompilerInterface {
     try {
       const vm = new VM({ timeout: 1000 });
       const output = vm.run(code.replace(/console\.log/g, ''));
-      return { output: JSON.stringify(output) };
+      return { output: JSON.stringify(output), execution: 'success' };
     } catch (error) {
-      throw new BadRequestException(`${error}`);
+      throw new BadRequestException({
+        error: `${error}`,
+        execution: 'failed',
+      });
     }
   }
 }
